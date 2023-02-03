@@ -48,11 +48,12 @@ public class AuthorizationServerConfig {
                 .clientAuthenticationMethod(ClientAuthenticationMethod.CLIENT_SECRET_BASIC)
                 .authorizationGrantType(AuthorizationGrantType.IMPLICIT)
                 .authorizationGrantType(AuthorizationGrantType.REFRESH_TOKEN)
+                .authorizationGrantType(AuthorizationGrantType.AUTHORIZATION_CODE)
 //                .authorizationGrantType(AuthorizationGrantType.JWT_BEARER)
-//                .redirectUri("http://127.0.0.1:8080/login/oauth2/code/wg-planer")
-//                .redirectUri("http://127.0.0.1:8080/authorized")
-//                .scope(OidcScopes.OPENID)
-//                .scope("articles.read")
+                .redirectUri("http://127.0.0.1:8080/login/oauth2/code/wg-planer")
+                .redirectUri("http://127.0.0.1:8080/authorized")
+                .scope(OidcScopes.OPENID)
+                .scope("articles.read")
                 .build();
 
         return new InMemoryRegisteredClientRepository(registeredClient);
