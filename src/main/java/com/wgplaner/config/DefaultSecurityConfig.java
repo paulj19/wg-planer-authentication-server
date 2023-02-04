@@ -18,12 +18,13 @@ public class DefaultSecurityConfig {
 
     @Bean
     SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
-        http.authorizeRequests(authorizeRequests ->
-          authorizeRequests.anyRequest().authenticated()
-        )
-          .formLogin(withDefaults());
-        
-        OAuth2AuthorizationServerConfigurer<HttpSecurity> authorizationServerConfigurer =	new OAuth2AuthorizationServerConfigurer<>();
+        http.authorizeRequests().antMatchers("/actuator/**").permitAll().and()
+                .authorizeRequests(authorizeRequests ->
+                        authorizeRequests.anyRequest().authenticated()
+                )
+                .formLogin(withDefaults());
+
+        OAuth2AuthorizationServerConfigurer<HttpSecurity> authorizationServerConfigurer = new OAuth2AuthorizationServerConfigurer<>();
         http.oauth2ResourceServer(OAuth2ResourceServerConfigurer::jwt).apply(authorizationServerConfigurer);
         return http.build();
     }
@@ -31,10 +32,10 @@ public class DefaultSecurityConfig {
     @Bean
     UserDetailsService users() {
         UserDetails user = User.withDefaultPasswordEncoder()
-          .username("admin")
-          .password("password")
-          .roles("USER")
-          .build();
+                .username("admin")
+                .password("password")
+                .roles("USER")
+                .build();
         return new InMemoryUserDetailsManager(user);
     }
 
