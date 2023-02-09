@@ -4,6 +4,7 @@ import java.security.KeyPair;
 import java.security.KeyPairGenerator;
 import java.security.interfaces.RSAPrivateKey;
 import java.security.interfaces.RSAPublicKey;
+import java.util.Arrays;
 import java.util.UUID;
 
 import org.springframework.context.annotation.Bean;
@@ -28,6 +29,11 @@ import com.nimbusds.jose.jwk.JWKSet;
 import com.nimbusds.jose.jwk.RSAKey;
 import com.nimbusds.jose.jwk.source.JWKSource;
 import com.nimbusds.jose.proc.SecurityContext;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration(proxyBeanMethods = false)
 public class AuthorizationServerConfig {
@@ -37,8 +43,36 @@ public class AuthorizationServerConfig {
     public SecurityFilterChain authServerSecurityFilterChain(HttpSecurity http) throws Exception {
         OAuth2AuthorizationServerConfiguration.applyDefaultSecurity(http);
 //        http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.NEVER);
-        return http.formLogin(Customizer.withDefaults()).build();
+        return http.cors().configurationSource(request -> new CorsConfiguration().applyPermitDefaultValues()).and()
+                .formLogin(Customizer.withDefaults()).build();
     }
+//    @Bean
+//    CorsConfigurationSource corsConfigurationSource() {
+//        CorsConfiguration configuration = new CorsConfiguration();
+//        configuration.setAllowedOrigins(Arrays.asList("localhost:19006"));
+//        configuration.setAllowedMethods(Arrays.asList("GET","POST","PATCH", "PUT", "DELETE", "OPTIONS", "HEAD"));
+//        configuration.setAllowCredentials(true);
+//        configuration.setAllowedHeaders(Arrays.asList("Authorization", "Requestor-Type"));
+//        configuration.setExposedHeaders(Arrays.asList("X-Get-Header"));
+//        configuration.setMaxAge(3600L);
+//        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+//        source.registerCorsConfiguration("/**", configuration);
+//        return source;
+//    }
+
+//    @Bean
+//    public WebMvcConfigurer corsMappingConfigurer() {
+//        return new WebMvcConfigurer() {
+//            @Override
+//            public void addCorsMappings(CorsRegistry registry) {
+//                registry.addMapping("/**")
+//                        .allowedOrigins("*")
+//                        .allowedMethods("*")
+//                        .allowedHeaders("*")
+//                        .exposedHeaders("*");
+//            }
+//        };
+//    }
 
     @Bean
     public RegisteredClientRepository registeredClientRepository() {
@@ -46,14 +80,15 @@ public class AuthorizationServerConfig {
                 .clientId("wg-planer")
                 .clientSecret("{noop}secret")
                 .clientAuthenticationMethod(ClientAuthenticationMethod.CLIENT_SECRET_BASIC)
-                .authorizationGrantType(AuthorizationGrantType.IMPLICIT)
                 .authorizationGrantType(AuthorizationGrantType.REFRESH_TOKEN)
                 .authorizationGrantType(AuthorizationGrantType.AUTHORIZATION_CODE)
 //                .authorizationGrantType(AuthorizationGrantType.JWT_BEARER)
-                .redirectUri("http://127.0.0.1:8080/login/oauth2/code/wg-planer")
-                .redirectUri("http://127.0.0.1:8080/authorized")
+                //.redirectUri("http://127.0.0.1:8080/login/oauth2/code/wg-planer")
+                .redirectUri("https://auth.expo.io/paulo48/wg-planer-mobile")
+                .redirectUri("http://auth.expo.io/authorized")
+                //.redirectUri("http://127.0.0.1:8080/authorized")
                 .scope(OidcScopes.OPENID)
-                .scope("articles.read")
+//                .scope("articles.read")
                 .build();
 
         return new InMemoryRegisteredClientRepository(registeredClient);
@@ -96,7 +131,7 @@ public class AuthorizationServerConfig {
     @Bean
     public ProviderSettings providerSettings() {
         return ProviderSettings.builder()
-                .issuer("http://auth-server:9000")
+                .issuer("http://localhost:8080")
                 .build();
     }
 }
