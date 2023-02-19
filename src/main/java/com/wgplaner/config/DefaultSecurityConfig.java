@@ -3,9 +3,9 @@ package com.wgplaner.config;
 import static org.springframework.security.config.Customizer.withDefaults;
 
 import org.springframework.context.annotation.Bean;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configurers.oauth2.server.authorization.OAuth2AuthorizationServerConfigurer;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -13,12 +13,22 @@ import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.cors.CorsConfiguration;
 
+import java.util.Arrays;
+
 @EnableWebSecurity
 public class DefaultSecurityConfig {
 
     @Bean
     SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
-        http.cors().configurationSource(request -> new CorsConfiguration().applyPermitDefaultValues()).and().authorizeRequests().antMatchers("/actuator/**").permitAll().and()
+        http.cors().configurationSource(request -> {
+                    CorsConfiguration corsConfiguration = new CorsConfiguration();
+                    //corsConfiguration.setAllowedOrigins(List.of("127.0.0.1:19006")); //TODO set this later
+                    corsConfiguration.setAllowCredentials(true);
+                    corsConfiguration.setAllowedMethods(Arrays.asList(HttpMethod.GET.name(), HttpMethod.HEAD.name(), HttpMethod.POST.name(), HttpMethod.OPTIONS.name()));
+                    corsConfiguration.applyPermitDefaultValues();
+                    return corsConfiguration;
+                }).and()
+                .authorizeRequests().antMatchers("/actuator/**").permitAll().and()
                 .authorizeRequests(authorizeRequests ->
                         authorizeRequests.anyRequest().authenticated()
                 )
