@@ -4,7 +4,6 @@ import java.security.KeyPair;
 import java.security.KeyPairGenerator;
 import java.security.interfaces.RSAPrivateKey;
 import java.security.interfaces.RSAPublicKey;
-import java.util.Arrays;
 import java.util.UUID;
 
 import org.springframework.context.annotation.Bean;
@@ -14,7 +13,6 @@ import org.springframework.core.annotation.Order;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.OAuth2AuthorizationServerConfiguration;
-import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.oauth2.core.AuthorizationGrantType;
 import org.springframework.security.oauth2.core.ClientAuthenticationMethod;
 import org.springframework.security.oauth2.core.oidc.OidcScopes;
@@ -30,10 +28,6 @@ import com.nimbusds.jose.jwk.RSAKey;
 import com.nimbusds.jose.jwk.source.JWKSource;
 import com.nimbusds.jose.proc.SecurityContext;
 import org.springframework.web.cors.CorsConfiguration;
-import org.springframework.web.cors.CorsConfigurationSource;
-import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-import org.springframework.web.servlet.config.annotation.CorsRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration(proxyBeanMethods = false)
 public class AuthorizationServerConfig {
@@ -80,13 +74,14 @@ public class AuthorizationServerConfig {
                 .clientId("wg-planer")
                 .clientSecret("{noop}secret")
                 .clientAuthenticationMethod(ClientAuthenticationMethod.CLIENT_SECRET_BASIC)
+                .clientAuthenticationMethod(ClientAuthenticationMethod.CLIENT_SECRET_POST)
                 .authorizationGrantType(AuthorizationGrantType.REFRESH_TOKEN)
                 .authorizationGrantType(AuthorizationGrantType.AUTHORIZATION_CODE)
 //                .authorizationGrantType(AuthorizationGrantType.JWT_BEARER)
                 //.redirectUri("http://127.0.0.1:8080/login/oauth2/code/wg-planer")
                 .redirectUri("https://auth.expo.io/paulo48/wg-planer-mobile")
                 .redirectUri("http://auth.expo.io/authorized")
-                //.redirectUri("http://127.0.0.1:8080/authorized")
+                .redirectUri("http://127.0.0.1:19006/wg-planer/login")
                 .scope(OidcScopes.OPENID)
 //                .scope("articles.read")
                 .build();
@@ -131,7 +126,8 @@ public class AuthorizationServerConfig {
     @Bean
     public ProviderSettings providerSettings() {
         return ProviderSettings.builder()
-                .issuer("http://localhost:8080")
+                .issuer("https://wg-planer-auth-server.onrender.com")
+                //.issuer("http://localhost:8080")
                 .build();
     }
 }
