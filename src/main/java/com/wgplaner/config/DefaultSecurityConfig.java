@@ -23,7 +23,8 @@ public class DefaultSecurityConfig {
         http.cors().configurationSource(request -> {
                     CorsConfiguration corsConfiguration = new CorsConfiguration();
                     //corsConfiguration.setAllowedOrigins(List.of("127.0.0.1:19006")); //TODO set this later
-                    corsConfiguration.setAllowedOrigins(Arrays.asList("http://127.0.0.1:19006", "https://auth.expo.io/" )); //TODO set this later
+                    corsConfiguration.setAllowedOrigins(Arrays.asList("http://127.0.0.1:19006", "https://auth.expo.io/",
+                            "https://auth.expo.io/wg-planer/login", "https://auth.expo.io/--/wg-planer/login", "exp://172.20.10.3:19000/--/wg-planer/login")); //TODO set this later
                     corsConfiguration.setAllowCredentials(true);
                     corsConfiguration.setAllowedMethods(Arrays.asList(HttpMethod.GET.name(), HttpMethod.HEAD.name(), HttpMethod.POST.name(), HttpMethod.OPTIONS.name()));
                     corsConfiguration.setAllowedHeaders(Arrays.asList("Authorization", "Cache-Control", "Content-Type"));

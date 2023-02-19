@@ -41,7 +41,8 @@ public class AuthorizationServerConfig {
 //        http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.NEVER);
         return http.cors().configurationSource(request -> {
                     CorsConfiguration corsConfiguration = new CorsConfiguration();
-                    corsConfiguration.setAllowedOrigins(Arrays.asList("http://127.0.0.1:19006", "https://auth.expo.io/" )); //TODO set this later
+                    corsConfiguration.setAllowedOrigins(Arrays.asList("http://127.0.0.1:19006", "https://auth.expo.io/",
+                            "https://auth.expo.io/wg-planer/login", "https://auth.expo.io/--/wg-planer/login")); //TODO set this later
                     corsConfiguration.setAllowCredentials(true);
                     corsConfiguration.setAllowedMethods(Arrays.asList(HttpMethod.GET.name(), HttpMethod.HEAD.name(), HttpMethod.POST.name(), HttpMethod.OPTIONS.name()));
                     //corsConfiguration.setAllowedOrigins(Arrays.asList("*"));
@@ -92,9 +93,11 @@ public class AuthorizationServerConfig {
                 .authorizationGrantType(AuthorizationGrantType.AUTHORIZATION_CODE)
 //                .authorizationGrantType(AuthorizationGrantType.JWT_BEARER)
                 //.redirectUri("http://127.0.0.1:8080/login/oauth2/code/wg-planer")
-                .redirectUri("https://auth.expo.io/paulo48/wg-planer-mobile")
-                .redirectUri("http://auth.expo.io/authorized")
                 .redirectUri("http://127.0.0.1:19006/wg-planer/login")
+                .redirectUri("https://auth.expo.io/paulo48/wg-planer-mobile")
+                .redirectUri("https://auth.expo.io/wg-planer/login")
+                .redirectUri("https://auth.expo.io/--/wg-planer/login")
+                .redirectUri("exp://172.20.10.3:19000/--/wg-planer/login")
                 .scope(OidcScopes.OPENID)
 //                .scope("articles.read")
                 .build();
