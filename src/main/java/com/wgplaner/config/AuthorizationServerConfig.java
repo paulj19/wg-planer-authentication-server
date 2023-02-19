@@ -45,7 +45,9 @@ public class AuthorizationServerConfig {
                     corsConfiguration.setAllowCredentials(true);
                     corsConfiguration.setAllowedMethods(Arrays.asList(HttpMethod.GET.name(), HttpMethod.HEAD.name(), HttpMethod.POST.name(), HttpMethod.OPTIONS.name()));
                     //corsConfiguration.setAllowedOrigins(Arrays.asList("*"));
-                    corsConfiguration.setAllowedHeaders(Arrays.asList("*"));
+                    corsConfiguration.setAllowedHeaders(Arrays.asList("Authorization", "Cache-Control", "Content-Type"));
+                    corsConfiguration.setExposedHeaders(Arrays.asList("Authorization"));
+                    corsConfiguration.setMaxAge(1800L);
                     //corsConfiguration.applyPermitDefaultValues();
                     return corsConfiguration;
                 }).and()
