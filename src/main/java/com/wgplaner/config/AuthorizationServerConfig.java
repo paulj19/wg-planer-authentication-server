@@ -4,12 +4,14 @@ import java.security.KeyPair;
 import java.security.KeyPairGenerator;
 import java.security.interfaces.RSAPrivateKey;
 import java.security.interfaces.RSAPublicKey;
+import java.util.Arrays;
 import java.util.UUID;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.OAuth2AuthorizationServerConfiguration;
@@ -37,7 +39,16 @@ public class AuthorizationServerConfig {
     public SecurityFilterChain authServerSecurityFilterChain(HttpSecurity http) throws Exception {
         OAuth2AuthorizationServerConfiguration.applyDefaultSecurity(http);
 //        http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.NEVER);
-        return http.cors().configurationSource(request -> new CorsConfiguration().applyPermitDefaultValues()).and()
+        return http.cors().configurationSource(request -> {
+                    CorsConfiguration corsConfiguration = new CorsConfiguration();
+                    //corsConfiguration.setAllowedOrigins(List.of("127.0.0.1:19006")); //TODO set this later
+                    corsConfiguration.setAllowCredentials(true);
+                    corsConfiguration.setAllowedMethods(Arrays.asList(HttpMethod.GET.name(), HttpMethod.HEAD.name(), HttpMethod.POST.name(), HttpMethod.OPTIONS.name()));
+                    corsConfiguration.setAllowedOrigins(Arrays.asList("*"));
+                    corsConfiguration.setAllowedHeaders(Arrays.asList("*"));
+                    corsConfiguration.applyPermitDefaultValues();
+                    return corsConfiguration;
+                }).and()
                 .formLogin(Customizer.withDefaults()).build();
     }
 //    @Bean
