@@ -22,10 +22,16 @@ public class DefaultSecurityConfig {
     SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
         http.cors().configurationSource(request -> {
                     CorsConfiguration corsConfiguration = new CorsConfiguration();
+                    //corsConfiguration.setAllowedOrigins(List.of("127.0.0.1:19006")); //TODO set this later
+                    corsConfiguration.setAllowedOrigins(Arrays.asList("http://127.0.0.1:19006")); //TODO set this later
                     corsConfiguration.setAllowCredentials(true);
                     corsConfiguration.setAllowedMethods(Arrays.asList(HttpMethod.GET.name(), HttpMethod.HEAD.name(), HttpMethod.POST.name(), HttpMethod.OPTIONS.name()));
+                    corsConfiguration.setExposedHeaders(Arrays.asList("*"));
+                    corsConfiguration.setAllowedHeaders(Arrays.asList("Authorization", "Cache-Control", "Content-Type"));
+                    corsConfiguration.setExposedHeaders(Arrays.asList("Authorization"));
                     corsConfiguration.setMaxAge(1800L);
-                    corsConfiguration.applyPermitDefaultValues();
+                    //corsConfiguration.setAllowedOrigins(Arrays.asList("*"));
+                    //corsConfiguration.applyPermitDefaultValues();
                     return corsConfiguration;
                 }).and()
                 .authorizeRequests().antMatchers("/actuator/**").permitAll().and()
