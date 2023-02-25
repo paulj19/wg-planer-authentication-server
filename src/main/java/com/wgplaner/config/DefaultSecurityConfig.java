@@ -34,8 +34,8 @@ public class DefaultSecurityConfig {
                     //corsConfiguration.applyPermitDefaultValues();
                     return corsConfiguration;
                 }).and()
-                .authorizeRequests().antMatchers("/actuator/**").permitAll().and()
-                .authorizeRequests(authorizeRequests ->
+                .authorizeHttpRequests().requestMatchers("/actuator/**").permitAll().and()
+                .authorizeHttpRequests(authorizeRequests ->
                         authorizeRequests.anyRequest().authenticated()
                 )
                 .formLogin(withDefaults());

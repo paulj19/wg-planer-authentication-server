@@ -14,7 +14,6 @@ import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.OAuth2AuthorizationServerConfiguration;
 import org.springframework.security.oauth2.core.AuthorizationGrantType;
 import org.springframework.security.oauth2.core.ClientAuthenticationMethod;
 import org.springframework.security.oauth2.core.oidc.OidcScopes;
@@ -22,7 +21,8 @@ import org.springframework.security.oauth2.jwt.JwtDecoder;
 import org.springframework.security.oauth2.server.authorization.client.InMemoryRegisteredClientRepository;
 import org.springframework.security.oauth2.server.authorization.client.RegisteredClient;
 import org.springframework.security.oauth2.server.authorization.client.RegisteredClientRepository;
-import org.springframework.security.oauth2.server.authorization.config.ProviderSettings;
+import org.springframework.security.oauth2.server.authorization.config.annotation.web.configuration.OAuth2AuthorizationServerConfiguration;
+import org.springframework.security.oauth2.server.authorization.settings.AuthorizationServerSettings;
 import org.springframework.security.web.SecurityFilterChain;
 
 import com.nimbusds.jose.jwk.JWKSet;
@@ -139,11 +139,22 @@ public class AuthorizationServerConfig {
         return keyPair;
     }
 
+    //@Bean
+    //public ProviderSettings providerSettings() {
+    //    return ProviderSettings.builder()
+    //            .issuer("https://wg-planer-auth-server.onrender.com")
+    //            //.issuer("http://localhost:8080")
+    //            .build();
+    //}
     @Bean
-    public ProviderSettings providerSettings() {
-        return ProviderSettings.builder()
-                .issuer("https://wg-planer-auth-server.onrender.com")
-                //.issuer("http://localhost:8080")
+    public AuthorizationServerSettings authorizationServerSettings() {
+        return AuthorizationServerSettings.builder()
+                //.issuer("https://wg-planer-auth-server.onrender.com")
+                .issuer("http://localhost:8080")
+                .tokenIntrospectionEndpoint("/oauth2/introspect")
+                .tokenRevocationEndpoint("/oauth2/revoke")
+                .oidcUserInfoEndpoint("/connect/userinfo")
+                .oidcClientRegistrationEndpoint("/connect/register")
                 .build();
     }
 }

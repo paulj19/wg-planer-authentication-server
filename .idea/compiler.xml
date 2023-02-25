@@ -6,6 +6,7 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="wg-planer-authentication-server" />
         <module name="wg-planer-authorization-server" />
         <module name="spring-authorization-server" />
       </profile>
@@ -14,6 +15,7 @@
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="spring-authorization-server" options="-parameters" />
+      <module name="wg-planer-authentication-server" options="-parameters" />
       <module name="wg-planer-authorization-server" options="-parameters" />
     </option>
   </component>
