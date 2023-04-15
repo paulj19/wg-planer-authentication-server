@@ -4,6 +4,7 @@ import com.nimbusds.jose.jwk.JWKSet;
 import com.nimbusds.jose.jwk.RSAKey;
 import com.nimbusds.jose.jwk.source.JWKSource;
 import com.nimbusds.jose.proc.SecurityContext;
+import com.wgplaner.user.UserAuthProfile;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
@@ -42,6 +43,8 @@ import static org.springframework.security.oauth2.server.authorization.OAuth2Tok
 
 @Configuration(proxyBeanMethods = false)
 public class AuthorizationServerConfig {
+    public static String CLIENT_ID = "wg-planer";
+    public static String CLIENT_PW = "secret";
 
     @Bean
     @Order(1)
@@ -93,9 +96,11 @@ public class AuthorizationServerConfig {
                     return corsConfiguration;
                 }).and()
                 .authorizeHttpRequests().requestMatchers("/actuator/**").permitAll().and()
+                .authorizeHttpRequests().requestMatchers("/register/new").permitAll().and()
                 .authorizeHttpRequests(authorizeRequests ->
                         authorizeRequests.anyRequest().authenticated()
                 )
+                .csrf().ignoringRequestMatchers("/register/new").and()
                 .formLogin(withDefaults());
         return http.build();
     }
@@ -113,8 +118,8 @@ public class AuthorizationServerConfig {
     @Bean
     public RegisteredClientRepository registeredClientRepository() {
         RegisteredClient registeredClient = RegisteredClient.withId(UUID.randomUUID().toString())
-                .clientId("wg-planer")
-                .clientSecret("{noop}secret")
+                .clientId(CLIENT_ID)
+                .clientSecret("{noop}" + CLIENT_PW)
                 .clientAuthenticationMethod(ClientAuthenticationMethod.CLIENT_SECRET_BASIC)
                 .clientAuthenticationMethod(ClientAuthenticationMethod.CLIENT_SECRET_POST)
                 .authorizationGrantType(AuthorizationGrantType.REFRESH_TOKEN)
@@ -169,7 +174,7 @@ public class AuthorizationServerConfig {
         return context -> {
             if (context.getTokenType().equals(ACCESS_TOKEN)) {
                 Authentication principal = context.getPrincipal();
-                context.getClaims().claim("oid", 123);
+                context.getClaims().claim("oid", ((UserAuthProfile) principal.getPrincipal()).getId());
             }
         };
     }
