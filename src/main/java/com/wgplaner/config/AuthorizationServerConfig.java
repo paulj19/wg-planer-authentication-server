@@ -40,6 +40,7 @@ import java.util.UUID;
 
 import static org.springframework.security.config.Customizer.withDefaults;
 import static org.springframework.security.oauth2.server.authorization.OAuth2TokenType.ACCESS_TOKEN;
+import static org.springframework.security.oauth2.server.authorization.OAuth2TokenType.REFRESH_TOKEN;
 
 @Configuration(proxyBeanMethods = false)
 public class AuthorizationServerConfig {
@@ -119,7 +120,7 @@ public class AuthorizationServerConfig {
     public RegisteredClientRepository registeredClientRepository() {
         RegisteredClient registeredClient = RegisteredClient.withId(UUID.randomUUID().toString())
                 .clientId(CLIENT_ID)
-                .clientSecret("{noop}" + CLIENT_PW)
+                .clientSecret("$2a$12$CmTmrsmkRBAnftlgho6A1.VpLF/ZmIO1FfLNGTa6f7SBFhrFtCuTm")
                 .clientAuthenticationMethod(ClientAuthenticationMethod.CLIENT_SECRET_BASIC)
                 .clientAuthenticationMethod(ClientAuthenticationMethod.CLIENT_SECRET_POST)
                 .authorizationGrantType(AuthorizationGrantType.REFRESH_TOKEN)
@@ -172,9 +173,10 @@ public class AuthorizationServerConfig {
     @Bean
     OAuth2TokenCustomizer<JwtEncodingContext> jwtCustomizer() {
         return context -> {
-            if (context.getTokenType().equals(ACCESS_TOKEN)) {
+            if (context.getTokenType().equals(ACCESS_TOKEN) || context.getTokenType().equals(REFRESH_TOKEN)) {
                 Authentication principal = context.getPrincipal();
                 context.getClaims().claim("oid", ((UserAuthProfile) principal.getPrincipal()).getId());
+                //context.getClaims().claim("oid", 123);
             }
         };
     }
