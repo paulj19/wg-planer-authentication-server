@@ -40,7 +40,6 @@ import java.util.UUID;
 
 import static org.springframework.security.config.Customizer.withDefaults;
 import static org.springframework.security.oauth2.server.authorization.OAuth2TokenType.ACCESS_TOKEN;
-import static org.springframework.security.oauth2.server.authorization.OAuth2TokenType.REFRESH_TOKEN;
 
 @Configuration(proxyBeanMethods = false)
 public class AuthorizationServerConfig {
@@ -173,10 +172,9 @@ public class AuthorizationServerConfig {
     @Bean
     OAuth2TokenCustomizer<JwtEncodingContext> jwtCustomizer() {
         return context -> {
-            if (context.getTokenType().equals(ACCESS_TOKEN) || context.getTokenType().equals(REFRESH_TOKEN)) {
+            if (context.getTokenType().equals(ACCESS_TOKEN)) {
                 Authentication principal = context.getPrincipal();
                 context.getClaims().claim("oid", ((UserAuthProfile) principal.getPrincipal()).getId());
-                //context.getClaims().claim("oid", 123);
             }
         };
     }

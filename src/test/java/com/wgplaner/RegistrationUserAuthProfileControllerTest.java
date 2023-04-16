@@ -49,7 +49,7 @@ public class RegistrationUserAuthProfileControllerTest {
         String password = "Password123!";
 
         //when
-        ResultActions resultActions = mockMvc.perform(MockMvcRequestBuilders.post("/register/new").contentType(MediaType.APPLICATION_JSON).content(asJsonString(new UserAuthProfileDto(username, password))));
+        ResultActions resultActions = mockMvc.perform(MockMvcRequestBuilders.post("/register/new").contentType(MediaType.APPLICATION_JSON).header("Authorization", "Basic d2ctcGxhbmVyOnNlY3JldA==").content(asJsonString(new UserAuthProfileDto(username, password))));
 
         //assert
         resultActions.andExpect(MockMvcResultMatchers.status().isCreated());
