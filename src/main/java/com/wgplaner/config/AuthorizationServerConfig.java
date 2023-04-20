@@ -1,10 +1,20 @@
 package com.wgplaner.config;
 
+import static org.springframework.security.config.Customizer.withDefaults;
+import static org.springframework.security.oauth2.server.authorization.OAuth2TokenType.ACCESS_TOKEN;
+
 import com.nimbusds.jose.jwk.JWKSet;
 import com.nimbusds.jose.jwk.RSAKey;
 import com.nimbusds.jose.jwk.source.JWKSource;
 import com.nimbusds.jose.proc.SecurityContext;
 import com.wgplaner.user.UserAuthProfile;
+import java.security.KeyPair;
+import java.security.KeyPairGenerator;
+import java.security.interfaces.RSAPrivateKey;
+import java.security.interfaces.RSAPublicKey;
+import java.time.Duration;
+import java.util.Arrays;
+import java.util.UUID;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
@@ -25,23 +35,14 @@ import org.springframework.security.oauth2.server.authorization.client.Registere
 import org.springframework.security.oauth2.server.authorization.config.annotation.web.configuration.OAuth2AuthorizationServerConfiguration;
 import org.springframework.security.oauth2.server.authorization.config.annotation.web.configurers.OAuth2AuthorizationServerConfigurer;
 import org.springframework.security.oauth2.server.authorization.settings.AuthorizationServerSettings;
+import org.springframework.security.oauth2.server.authorization.settings.TokenSettings;
 import org.springframework.security.oauth2.server.authorization.token.JwtEncodingContext;
 import org.springframework.security.oauth2.server.authorization.token.OAuth2TokenCustomizer;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint;
 import org.springframework.web.cors.CorsConfiguration;
 
-import java.security.KeyPair;
-import java.security.KeyPairGenerator;
-import java.security.interfaces.RSAPrivateKey;
-import java.security.interfaces.RSAPublicKey;
-import java.util.Arrays;
-import java.util.UUID;
-
-import static org.springframework.security.config.Customizer.withDefaults;
-import static org.springframework.security.oauth2.server.authorization.OAuth2TokenType.ACCESS_TOKEN;
-
-@Configuration(proxyBeanMethods = false)
+@Configuration
 public class AuthorizationServerConfig {
     public static String CLIENT_ID = "wg-planer";
     public static String CLIENT_PW = "secret";
@@ -121,7 +122,6 @@ public class AuthorizationServerConfig {
                 .clientId(CLIENT_ID)
                 .clientSecret("$2a$12$CmTmrsmkRBAnftlgho6A1.VpLF/ZmIO1FfLNGTa6f7SBFhrFtCuTm")
                 .clientAuthenticationMethod(ClientAuthenticationMethod.CLIENT_SECRET_BASIC)
-                .clientAuthenticationMethod(ClientAuthenticationMethod.CLIENT_SECRET_POST)
                 .authorizationGrantType(AuthorizationGrantType.REFRESH_TOKEN)
                 .authorizationGrantType(AuthorizationGrantType.AUTHORIZATION_CODE)
                 .redirectUri("http://127.0.0.1:19006/wg-planer/login")
@@ -129,10 +129,19 @@ public class AuthorizationServerConfig {
                 .redirectUri("https://auth.expo.io/wg-planer/login")
                 .redirectUri("https://auth.expo.io/--/wg-planer/login")
                 .redirectUri("exp://172.20.10.3:19000/--/wg-planer/login")
+                .tokenSettings(tokenSettings())
                 .scope(OidcScopes.OPENID)
                 .build();
 
         return new InMemoryRegisteredClientRepository(registeredClient);
+    }
+    @Bean
+    public TokenSettings tokenSettings() {
+    return TokenSettings.builder()
+        .accessTokenTimeToLive(Duration.ofMinutes(30L))
+        .refreshTokenTimeToLive(Duration.ofDays(182L))
+        .reuseRefreshTokens(false)
+        .build();
     }
 
     @Bean
