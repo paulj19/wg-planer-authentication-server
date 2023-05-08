@@ -60,7 +60,8 @@ public class AuthorizationServerConfig {
                             "https://auth.expo.io/",
                             "https://auth.expo.io/wg-planer/login",
                             "https://auth.expo.io/--/wg-planer/login",
-                            "exp://172.20.10.3:19000/--/wg-planer/login"));
+                            "exp://172.20.10.3:19000/--/wg-planer/login",
+                            "exp://192.168.178.42:19000/--/wg-planer/login"));
                     corsConfiguration.setAllowCredentials(true);
                     corsConfiguration.setAllowedMethods(
                             Arrays.asList(HttpMethod.GET.name(), HttpMethod.HEAD.name(), HttpMethod.POST.name(), HttpMethod.OPTIONS.name()));
@@ -87,7 +88,8 @@ public class AuthorizationServerConfig {
                             "https://auth.expo.io/",
                             "https://auth.expo.io/wg-planer/login",
                             "https://auth.expo.io/--/wg-planer/login",
-                            "exp://172.20.10.3:19000/--/wg-planer/login"));
+                            "exp://172.20.10.3:19000/--/wg-planer/login",
+                            "exp://192.168.178.42:19000/--/wg-planer/login"));
                     corsConfiguration.setAllowCredentials(true);
                     corsConfiguration.setAllowedMethods(Arrays.asList(HttpMethod.GET.name(), HttpMethod.HEAD.name(), HttpMethod.POST.name(), HttpMethod.OPTIONS.name()));
                     corsConfiguration.setAllowedHeaders(Arrays.asList("Authorization", "Cache-Control", "Content-Type"));
@@ -129,6 +131,7 @@ public class AuthorizationServerConfig {
                 .redirectUri("https://auth.expo.io/wg-planer/login")
                 .redirectUri("https://auth.expo.io/--/wg-planer/login")
                 .redirectUri("exp://172.20.10.3:19000/--/wg-planer/login")
+                .redirectUri("exp://192.168.178.42:19000/--/wg-planer/login")
                 .tokenSettings(tokenSettings())
                 .scope(OidcScopes.OPENID)
                 .build();
