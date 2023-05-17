@@ -18,23 +18,18 @@
 image: dokku/ci-docker-image
 
 stages:
-  - test
   - deploy
-
 
 variables:
   GIT_DEPTH: 0
   CI_DEBUG_TRACE: "true"
-test:
-  script:
-    - echo "xxx"
+
 deploy:
   stage: deploy
   only:
-    - master
+    - main
   variables:
     GIT_REMOTE_URL: ssh://dokku@116.203.96.104:22/wgplaner-auth-server
     SSH_PRIVATE_KEY: ${hetzer_server_ssh_private_key}
-  script:
-    - echo "LINET"
+  script: dokku-deploy
   after_script: [dokku-unlock]
