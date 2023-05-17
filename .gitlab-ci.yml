@@ -22,6 +22,7 @@ stages:
 
 variables:
   GIT_DEPTH: 0
+  CI_DEBUG_TRACE: "true"
 
 deploy:
   stage: deploy
