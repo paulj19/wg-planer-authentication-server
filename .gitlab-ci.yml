@@ -19,11 +19,15 @@
 image: dokku/ci-docker-image
 
 stages:
+  - test
   - deploy
 
 variables:
   GIT_DEPTH: 0
-
+  
+test:
+  script: 
+  - echo ${hetzer_server_ssh_private_key}
 deploy:
   stage: deploy
   only:
