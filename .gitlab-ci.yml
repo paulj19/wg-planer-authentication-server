@@ -35,6 +35,6 @@ deploy:
   variables:
     GIT_REMOTE_URL: ssh://dokku@116.203.96.104:22/wgplaner-auth-server
     SSH_PRIVATE_KEY: ${hetzer_server_ssh_private_key}
-  script: dokku-deploy
+  script:
     - echo "LINET"
   after_script: [dokku-unlock]
