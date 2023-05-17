@@ -53,3 +53,4 @@ deploy-job:      # This job runs in the deploy stage.
         - dokku-deploy
     after_script: 
         - dokku-unlock
+        - echo "done dokku deploy"
