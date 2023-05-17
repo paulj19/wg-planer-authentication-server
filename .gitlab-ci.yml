@@ -30,14 +30,6 @@ deploy:
     - master
   variables:
     GIT_REMOTE_URL: ssh://dokku@116.203.96.104:22/wgplaner-auth-server
-    SSH_PRIVATE_KEY: 
-        -----BEGIN OPENSSH PRIVATE KEY-----
-        b3BlbnNzaC1rZXktdjEAAAAABG5vbmUAAAAEbm9uZQAAAAAAAAABAAAAMwAAAAtzc2gtZW
-        QyNTUxOQAAACAGiyHd0MZPWFCONr5hog9pGr2bHY+1iMPJKHW2DgXM7AAAAJiIi1psiIta
-        bAAAAAtzc2gtZWQyNTUxOQAAACAGiyHd0MZPWFCONr5hog9pGr2bHY+1iMPJKHW2DgXM7A
-        AAAECr4UQUCmczlK3zrY4styK5K82xCl+IBLpyMUjo9aIwXwaLId3Qxk9YUI42vmGiD2ka
-        vZsdj7WIw8kodbYOBczsAAAAFWRpbGpvc2VwYXVsQGdtYWlsLmNvbQ==
-        -----END OPENSSH PRIVATE KEY-----
-
+    SSH_PRIVATE_KEY: ${hetzer_server_ssh_private_key}
   script: dokku-deploy
   after_script: [dokku-unlock]
