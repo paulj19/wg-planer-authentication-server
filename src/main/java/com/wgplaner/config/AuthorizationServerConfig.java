@@ -57,6 +57,7 @@ public class AuthorizationServerConfig {
         return http.cors().configurationSource(request -> {
                     CorsConfiguration corsConfiguration = new CorsConfiguration();
                     corsConfiguration.setAllowedOrigins(Arrays.asList("http://127.0.0.1:19006",
+                            "http://172.17.0.2",
                             "https://auth.expo.io/",
                             "https://auth.expo.io/wg-planer/login",
                             "https://auth.expo.io/--/wg-planer/login",
@@ -85,6 +86,7 @@ public class AuthorizationServerConfig {
         http.cors().configurationSource(request -> {
                     CorsConfiguration corsConfiguration = new CorsConfiguration();
                     corsConfiguration.setAllowedOrigins(Arrays.asList("http://127.0.0.1:19006",
+                            "http://172.17.0.2",
                             "https://auth.expo.io/",
                             "https://auth.expo.io/wg-planer/login",
                             "https://auth.expo.io/--/wg-planer/login",
