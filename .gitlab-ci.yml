@@ -44,7 +44,6 @@ variables:
    GIT_DEPTH: 0
 
 deploy-job:      # This job runs in the deploy stage.
-
     stage: deploy
     only:
         - master
