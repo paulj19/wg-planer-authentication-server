@@ -29,6 +29,7 @@ deploy:
   only:
     - main
   variables:
-    GIT_REMOTE_URL: ssh://dokku@116.203.96.104:22/auth-server-clone
+    GIT_REMOTE_URL: ssh://dokku@116.203.96.104:22/auth-server
     SSH_PRIVATE_KEY: ${hetzer_server_ssh_private_key}
   script: dokku-deploy
+  after_script: [dokku-unlock]
