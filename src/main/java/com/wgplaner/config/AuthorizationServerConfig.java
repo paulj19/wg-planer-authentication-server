@@ -110,16 +110,6 @@ public class AuthorizationServerConfig {
         return http.build();
     }
 
-//    @Bean
-//    UserDetailsService users() {
-//        UserDetails user = User.withDefaultPasswordEncoder()
-//                .username("admin")
-//                .password("password")
-//                .roles("USER")
-//                .build();
-//        return new InMemoryUserDetailsManager(user);
-//    }
-
     @Bean
     public RegisteredClientRepository registeredClientRepository() {
         RegisteredClient registeredClient = RegisteredClient.withId(UUID.randomUUID().toString())
