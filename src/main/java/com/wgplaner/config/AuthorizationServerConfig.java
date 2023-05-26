@@ -134,6 +134,7 @@ public class AuthorizationServerConfig {
                 .redirectUri("https://auth.expo.io/--/wg-planer/login")
                 .redirectUri("exp://172.20.10.3:19000/--/wg-planer/login")
                 .redirectUri("exp://192.168.178.42:19000/--/wg-planer/login")
+                .redirectUri("wg-planer-mobile://wg-planer/login")
                 .tokenSettings(tokenSettings())
                 .scope(OidcScopes.OPENID)
                 .build();
