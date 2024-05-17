@@ -62,6 +62,14 @@ public class AuthorizationServerConfig {
                             "https://auth.expo.io/wg-planer/login",
                             "https://auth.expo.io/--/wg-planer/login",
                             "exp://172.20.10.3:19000/--/wg-planer/login",
+                            "exp://192.168.33.184:8083/--/wg-planer/login",
+                            "exp://192.168.33.30:8083/--/wg-planer/login",
+                            "exp://192.168.33.25:8083/--/wg-planer/login",
+                            "exp://192.168.33.128:8083/--/wg-planer/login",
+                            "exp://192.168.33.133:8083/--/wg-planer/login",
+                            "exp://192.168.33.105:8083/--/wg-planer/login",
+                            "exp://192.168.33.95:8083/--/wg-planer/login",
+                            "exp://192.168.33.237:8083/--/wg-planer/login",
                             "exp://192.168.178.42:19000/--/wg-planer/login"));
                     corsConfiguration.setAllowCredentials(true);
                     corsConfiguration.setAllowedMethods(
@@ -91,6 +99,14 @@ public class AuthorizationServerConfig {
                             "https://auth.expo.io/wg-planer/login",
                             "https://auth.expo.io/--/wg-planer/login",
                             "exp://172.20.10.3:19000/--/wg-planer/login",
+                            "exp://192.168.33.184:8083/--/wg-planer/login",
+                            "exp://192.168.33.30:8083/--/wg-planer/login",
+                            "exp://192.168.33.133:8083/--/wg-planer/login",
+                            "exp://192.168.33.105:8083/--/wg-planer/login",
+                            "exp://192.168.33.95:8083/--/wg-planer/login",
+                            "exp://192.168.33.25:8083/--/wg-planer/login",
+                            "exp://192.168.33.237:8083/--/wg-planer/login",
+                            "exp://192.168.33.128:8083/--/wg-planer/login",
                             "exp://192.168.178.42:19000/--/wg-planer/login"));
                     corsConfiguration.setAllowCredentials(true);
                     corsConfiguration.setAllowedMethods(Arrays.asList(HttpMethod.GET.name(), HttpMethod.HEAD.name(), HttpMethod.POST.name(), HttpMethod.OPTIONS.name()));
@@ -124,6 +140,14 @@ public class AuthorizationServerConfig {
                 .redirectUri("https://auth.expo.io/--/wg-planer/login")
                 .redirectUri("exp://172.20.10.3:19000/--/wg-planer/login")
                 .redirectUri("exp://172.20.10.3:8081/--/wg-planer/login")
+                .redirectUri("exp://192.168.33.184:8083/--/wg-planer/login")
+                .redirectUri("exp://192.168.33.133:8083/--/wg-planer/login")
+                .redirectUri("exp://192.168.33.105:8083/--/wg-planer/login")
+                .redirectUri("exp://192.168.33.128:8083/--/wg-planer/login")
+                .redirectUri("exp://192.168.33.30:8083/--/wg-planer/login")
+                .redirectUri("exp://192.168.33.25:8083/--/wg-planer/login")
+                .redirectUri("exp://192.168.33.237:8083/--/wg-planer/login")
+                .redirectUri("exp://192.168.33.95:8083/--/wg-planer/login")
                 .redirectUri("exp://192.168.178.42:19000/--/wg-planer/login")
                 .redirectUri("wg-planer-mobile://wg-planer/login")
                 .tokenSettings(tokenSettings())
@@ -181,6 +205,7 @@ public class AuthorizationServerConfig {
             if (context.getTokenType().equals(ACCESS_TOKEN)) {
                 Authentication principal = context.getPrincipal();
                 context.getClaims().claim("oid", ((UserAuthProfile) principal.getPrincipal()).getId());
+                context.getClaims().claim("floor_id", ((UserAuthProfile) principal.getPrincipal()).getFloorId());
             }
         };
     }

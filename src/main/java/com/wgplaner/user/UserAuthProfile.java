@@ -25,13 +25,17 @@ public class UserAuthProfile extends AbstractEntity implements UserDetails {
     private String username;
     @Column(name = "password", unique = true)
     private String password;
+    @Column(name = "floor_id")
+    private String floorId;
 
-    private UserAuthProfile(String username, String password) {
+
+    private UserAuthProfile(String username, String password, String floorId) {
         this.username = username;
         this.password = password;
+        this.floorId = floorId;
     }
-    public static UserAuthProfile from(String username, String password) {
-        return new UserAuthProfile(username, password);
+    public static UserAuthProfile from(String username, String password, String floorId) {
+        return new UserAuthProfile(username, password, floorId);
     }
 
     @Override

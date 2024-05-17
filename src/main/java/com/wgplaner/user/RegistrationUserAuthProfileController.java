@@ -32,8 +32,8 @@ public class RegistrationUserAuthProfileController {
         if( userAuthProfileRepository.findByUsername( userAuthProfileDto.username()) != null ) {
             throw new IllegalArgumentException("New user registration failed, non-unique username: "+ userAuthProfileDto.username());
         }
-        UserAuthProfile userAuthProfile = userAuthProfileRepository.save(UserAuthProfile.from(userAuthProfileDto.username(), passwordEncoder.encode(userAuthProfileDto.password())));
-        log.info("New userAuthProfile registered and saved. id {} username {}", userAuthProfile.getId(), userAuthProfile.getUsername());
+        UserAuthProfile userAuthProfile = userAuthProfileRepository.save(UserAuthProfile.from(userAuthProfileDto.username(), passwordEncoder.encode(userAuthProfileDto.password()), userAuthProfileDto.floorId()));
+        log.info("New userAuthProfile registered and saved. id {} username {} floorId {}", userAuthProfile.getId(), userAuthProfile.getUsername(), userAuthProfile.getFloorId());
         return userAuthProfile.getId();
     }
 

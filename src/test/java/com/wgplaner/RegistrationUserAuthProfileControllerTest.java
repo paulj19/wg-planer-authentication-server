@@ -47,9 +47,10 @@ public class RegistrationUserAuthProfileControllerTest {
     public void whenPostWithValidData_shouldCreateAndRespondWithId() throws Exception {
         String username = "username";
         String password = "Password123!";
+        String floorId = "floorId";
 
         //when
-        ResultActions resultActions = mockMvc.perform(MockMvcRequestBuilders.post("/register/new").contentType(MediaType.APPLICATION_JSON).header("Authorization", "Basic d2ctcGxhbmVyOnNlY3JldA==").content(asJsonString(new UserAuthProfileDto(username, password))));
+        ResultActions resultActions = mockMvc.perform(MockMvcRequestBuilders.post("/register/new").contentType(MediaType.APPLICATION_JSON).header("Authorization", "Basic d2ctcGxhbmVyOnNlY3JldA==").content(asJsonString(new UserAuthProfileDto(username, password, floorId))));
 
         //assert
         resultActions.andExpect(MockMvcResultMatchers.status().isCreated());

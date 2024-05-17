@@ -3,6 +3,7 @@ package com.wgplaner.user;
 public record UserAuthProfileDto(
     @ValidUsername
     String username,
-    @ValidPassword String password
+    @ValidPassword String password,
+    String floorId
 ) {
 }
