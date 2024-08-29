@@ -64,6 +64,9 @@ public class AuthorizationServerConfig {
           "exp://172.20.10.3:19000/--/wg-planer/login",
           "exp://192.168.1.9:8082/--/wg-planer/login",
           "exp://192.168.1.9:19000/--/wg-planer/login",
+          "exp://192.168.1.9:19000/--/wg-planer/login",
+          "exp://192.168.1.11:8082/--/wg-planer/login",
+          "exp://192.168.1.11:19000/--/wg-planer/login",
           "exp://192.168.178.42:19000/--/wg-planer/login"));
       corsConfiguration.setAllowCredentials(true);
       corsConfiguration.setAllowedMethods(
@@ -95,6 +98,7 @@ public class AuthorizationServerConfig {
           "exp://172.20.10.3:19000/--/wg-planer/login",
           "exp://192.168.1.9:19000/--/wg-planer/login",
           "exp://192.168.1.9:8082/--/wg-planer/login",
+          "exp://192.168.1.11:8082/--/wg-planer/login",
 
           "exp://192.168.178.42:19000/--/wg-planer/login"));
       corsConfiguration.setAllowCredentials(true);
@@ -140,6 +144,8 @@ public class AuthorizationServerConfig {
         .redirectUri("exp://192.168.178.42:19000/--/wg-planer/login")
         .redirectUri("exp://192.168.1.9:8082/--/wg-planer/login")
         .redirectUri("exp://192.168.1.9:19000/--/wg-planer/login")
+        .redirectUri("exp://192.168.1.11:8082/--/wg-planer/login")
+        .redirectUri("exp://192.168.1.11:19000/--/wg-planer/login")
         .redirectUri("wg-planer-mobile://wg-planer/login")
         .tokenSettings(tokenSettings())
         .scope(OidcScopes.OPENID)

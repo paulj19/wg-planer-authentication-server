@@ -1,18 +1,87 @@
 <!DOCTYPE html>
 <html xmlns="http://www.thymeleaf.org">
 <head>
-    <title>Login</title>
-<head/>
+  <title>Login</title>
 <body>
-  <h2>Login</h2>
-  <form th:action="@{/login}" method="post">
-    <label for="username">Username:</label>
-    <input type="text" id="username" name="username" required autofocus>
-    <label for="password">Password:</label>
-    <input type="password" id="password" name="password" required>
-    <button type="submit">Login</button>
-  </form>
+  <div class="login-container"> <h2>Login</h2>
+    <form th:action="@{/login}" method="post">
+      <div class="form-group"> <label for="username">Username:</label>
+        <input type="text" id="username" name="username" required autofocus>
+      </div>
+      <div class="form-group">
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required>
+      </div>
+      <button type="submit">Login</button>
+    </form>
+    <a href="http://192.168.1.11:8081/forgot-password">Forgot password</a>
+  </div>
 
-  <a href="/forgot-password">Forgot password?</a>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0; /* Remove default margin */
+      display: flex; /* Center the login container horizontally */
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh; /* Set minimum height for full viewport */
+      background-color: #f0f0f0; /* Light gray background */
+    }
+
+    .login-container {
+      background-color: #fff; /* White background for the form */
+      padding: 30px;
+      border-radius: 5px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow effect */
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .form-group {
+      margin-bottom: 15px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    input[type="text"],
+    input[type="password"] {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+      box-sizing: border-box; /* Include padding in width calculation */
+    }
+
+	button[type="submit"] {
+  	background-color: #07a1e8; /* Green blue color */
+  	color: white;
+  	padding: 10px 20px;
+  	border: none;
+  	border-radius: 3px;
+  	cursor: pointer;
+  	margin-left: 40%; /* Center horizontally */
+	}
+
+    button[type="submit"]:hover {
+      background-color: #0099ff; /* Darker blue on hover */
+    }
+
+    a {
+      color: #333;
+      text-decoration: none; /* Remove underline */
+      display: block; /* Display on a new line */
+      margin-top: 10px;
+    }
+
+    a:hover {
+      color: #666; /* Slightly darker on hover */
+    }
+  </style>
 </body>
 </html>
